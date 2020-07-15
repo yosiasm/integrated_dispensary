@@ -5,7 +5,7 @@ Website: https://www.allphptricks.com/
 */
 
 
-$con = mysqli_connect("localhost","pandas","yosibroker18","apotik_terintegrasi");
+$con = mysqli_connect("localhost","root","","apotik_terintegrasi");
 // Check connection
 if (mysqli_connect_errno())
   {
