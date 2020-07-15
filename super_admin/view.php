@@ -4,7 +4,7 @@ Author: Javed Ur Rehman
 Website: https://www.allphptricks.com/
 */
  
-require('db.php');
+require('../db.php');
 include("auth.php");
 ?>
 <!DOCTYPE html>

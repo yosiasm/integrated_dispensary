@@ -16,36 +16,41 @@ $row = mysqli_fetch_assoc($result);
 </head>
 <body>
 <div class="form">
-<p><a href="dashboard.php">Dashboard</a> | <a href="insert.php">Insert New Record</a> | <a href="logout.php">Logout</a></p>
-<h1>Update Record</h1>
+<p><a href="dashboard.php">Dashboard</a> | <a href="insert_apotik.php">Insert New Apotik</a> | <a href="logout.php">Logout</a></p>
+<h1>Update Apotik Record</h1>
 <?php
 $status = "";
 if(isset($_POST['new']) && $_POST['new']==1)
 {
 $id=$_REQUEST['id'];
 $trn_date = date("Y-m-d H:i:s");
-$name =$_REQUEST['name'];
-$age =$_REQUEST['age'];
-$submittedby = $_SESSION["username"];
-$update="update new_record set trn_date='".$trn_date."', name='".$name."', age='".$age."', submittedby='".$submittedby."' where id='".$id."'";
+$nama_apotik = $_REQUEST['nama_apotik'];
+$alamat_apotik =  $_REQUEST['alamat_apotik'];
+$kontak_apotik =  $_REQUEST['kontak_apotik'];
+$longitude =  $_REQUEST['longitude'];
+$latitude =  $_REQUEST['latitude'];
+// $submittedby = $_SESSION["username"];
+$update="UPDATE `apotik` SET `nama_apotik` = '$nama_apotik',`alamat_apotik` = '$alamat_apotik',`kontak_apotik` = '$kontak_apotik',`longitude` = '$longitude',`latitude` = '$latitude' WHERE `apotik`.`id_apotik` = '$id';";
 mysqli_query($con, $update) or die(mysqli_error());
-$status = "Record Updated Successfully. </br></br><a href='view.php'>View Updated Record</a>";
+$status = "Record Updated Successfully. </br></br><a href='view_apotik.php'>View Updated Record</a>";
 echo '<p style="color:#FF0000;">'.$status.'</p>';
 }else {
 ?>
 <div>
 <form name="form" method="post" action=""> 
 <input type="hidden" name="new" value="1" />
-<input name="id" type="hidden" value="<?php echo $row['id'];?>" />
-<p><input type="text" name="name" placeholder="Enter Name" required value="<?php echo $row['name'];?>" /></p>
-<p><input type="text" name="age" placeholder="Enter Age" required value="<?php echo $row['age'];?>" /></p>
+<input name="id" type="hidden" value="<?php echo $row['id_apotik'];?>" />
+
+<p><input type="text" name="nama_apotik" placeholder="Masukan Nama Apotik" required value="<?php echo $row['nama_apotik'];?>"/></p>
+<p><input type="text" name="alamat_apotik" placeholder="Masukan Alamat" required value="<?php echo $row['alamat_apotik'];?>"/></p>
+<p><input type="text" name="kontak_apotik" placeholder="Masukan Kontak" required value="<?php echo $row['kontak_apotik'];?>"/></p>
+<p><input type="number" step="any" name="longitude" placeholder="Masukan longitude" required value="<?php echo $row['longitude'];?>"/></p>
+<p><input type="number" step="any" name="latitude" placeholder="Masukan latitude" required value="<?php echo $row['latitude'];?>"/></p>
+
 <p><input name="submit" type="submit" value="Update" /></p>
 </form>
 <?php } ?>
 
-<br /><br /><br /><br />
-<a href="https://www.allphptricks.com/insert-view-edit-and-delete-record-from-database-using-php-and-mysqli/">Tutorial Link</a> <br /><br />
-For More Web Development Tutorials Visit: <a href="https://www.allphptricks.com/">AllPHPTricks.com</a>
 </div>
 </div>
 </body>
