@@ -35,16 +35,33 @@ Website: https://www.allphptricks.com/
 			echo "berhasil";
 			while($row = mysqli_fetch_assoc($result)) {
 				$_SESSION['jenis_role_apotik'] = $row['jenis_role'];
+				$id_person_credential = $row['id_person_credential'];
 			}
 			echo $_SESSION['jenis_role_apotik'];
 			if($_SESSION['jenis_role_apotik'] == 'Super Admin'){
 				header("Location: super_admin/index.php"); // Redirect user to index.php
+
+
+			}elseif ($_SESSION['jenis_role_apotik'] == 'Admin Klinik') {
+				$q = "SELECT * FROM `adminOnklinik` WHERE id_admin_klinik = '$id_person_credential'";
+				echo $q;
+				$res = mysqli_query($con,$q) or die(mysqli_error());
+		  		$r = mysqli_num_rows($res);
+		  		if($r==1){
+		  			while($r = mysqli_fetch_assoc($res)) {
+		  				$_SESSION['id_role_detail_apotik'] = $r['id_klinik'];
+
+					}
+		  		}
+
+				header("Location: admin_klinik/index.php"); // Redirect user to index.php
+				
 			}
 
 
-            }else{
-				echo "<div class='form'><h3>Username/password is incorrect.</h3><br/>Click here to <a href='login.php'>Login</a></div>";
-				}
+        }else{
+			echo "<div class='form'><h3>Username/password is incorrect.</h3><br/>Click here to <a href='login.php'>Login</a></div>";
+		}
     }else{
 ?>
 <div class="form">
@@ -56,9 +73,7 @@ Website: https://www.allphptricks.com/
 </form>
 <p>Not registered yet? <a href='registration.php'>Register Here</a></p>
 
-<br /><br />
-<a href="https://www.allphptricks.com/insert-view-edit-and-delete-record-from-database-using-php-and-mysqli/">Tutorial Link</a> <br /><br />
-For More Web Development Tutorials Visit: <a href="https://www.allphptricks.com/">AllPHPTricks.com</a>
+
 </div>
 <?php } ?>
 

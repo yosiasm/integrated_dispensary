@@ -22,10 +22,8 @@ include("auth.php"); //include auth.php file on all secure pages ?>
 <!-- <p><a href="insert.php">Insert New Record</a></p> -->
 <!-- <p><a href="view.php">View Records</a><p> -->
 
-<p><a href="insert_apotik.php">Insert Apotik Records</a><p>
-<p><a href="view_apotik.php">View Apotik Records</a><p>
-<p><a href="insert_klinik.php">Insert Klinik Records</a><p>
-<p><a href="view_klinik.php">View Klinik Records</a><p>
+<p><a href="insert_dokter.php">Insert Dokter Records</a><p>
+<p><a href="view_dokter.php">View dokter Records</a><p>
 <p><a href="logout.php">Logout</a></p>
 
 
