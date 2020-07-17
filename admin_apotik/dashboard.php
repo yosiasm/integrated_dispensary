@@ -16,6 +16,7 @@ include("auth.php"); //include auth.php file on all secure pages ?>
 <body>
 <div class="form">
 <p>Welcome to Dashboard.</p>
+<?php include("map.php"); ?>
 <?php include("monitor.php"); ?>
 <h3>Action</h3>
 <p><a href="index.php">Home</a><p>

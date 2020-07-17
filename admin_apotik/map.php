@@ -4,7 +4,7 @@
 require('../db.php');
 include("auth.php");
 ?>
-<html>
+<h3>Map</h3>
 <head>
    <meta charset="utf-8">
    <!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" /> -->
@@ -17,7 +17,7 @@ include("auth.php");
 
    </style>
 </head>
-<body>
+
     <div id="map"></div>
     <script>
 
@@ -72,5 +72,3 @@ while($row = mysqli_fetch_assoc($result)) { ?>
 		//   .openPopup();
         
     </script>
-</body>
-</html>

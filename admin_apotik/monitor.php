@@ -19,46 +19,25 @@ include("auth.php");
 <tbody>
 <?php
 $count=1;
-// klinik
-$sel_query="SELECT COUNT(id_klinik) FROM `klinik` WHERE 1 ";
-$result = mysqli_query($con,$sel_query);
-while($row = mysqli_fetch_assoc($result)) { ?>
-<tr><td align="center"><?php echo $count; ?></td>
-	<td align="center">Klinik</td>
-	<td align="center"><?php echo $row["COUNT(id_klinik)"]; ?></td>
-</tr>
-<?php $count++; } ?>
-
-<?php
-// apotik
-$sel_query="SELECT COUNT(id_apotik) FROM `apotik` WHERE 1 ";
-$result = mysqli_query($con,$sel_query);
-while($row = mysqli_fetch_assoc($result)) { ?>
-<tr><td align="center"><?php echo $count; ?></td>
-	<td align="center">Apotik</td>
-	<td align="center"><?php echo $row["COUNT(id_apotik)"]; ?></td>
-</tr>
-<?php $count++; } ?>
-
-<?php
-// dokter
-$sel_query="SELECT COUNT(id_role_credential) FROM `credential` WHERE id_role_credential=3 ";
-$result = mysqli_query($con,$sel_query);
-while($row = mysqli_fetch_assoc($result)) { ?>
-<tr><td align="center"><?php echo $count; ?></td>
-	<td align="center">Dokter</td>
-	<td align="center"><?php echo $row["COUNT(id_role_credential)"]; ?></td>
-</tr>
-<?php $count++; } ?>
-
-<?php
 // kurir
-$sel_query="SELECT COUNT(id_role_credential) FROM `credential` WHERE id_role_credential=5 ";
+$sel_query="SELECT COUNT(id_kurirOnApotik) FROM `kurirOnApotik` WHERE id_apotik=".$_SESSION['id_role_detail_apotik'];
 $result = mysqli_query($con,$sel_query);
 while($row = mysqli_fetch_assoc($result)) { ?>
 <tr><td align="center"><?php echo $count; ?></td>
 	<td align="center">Kurir</td>
-	<td align="center"><?php echo $row["COUNT(id_role_credential)"]; ?></td>
+	<td align="center"><?php echo $row["COUNT(id_kurirOnApotik)"]; ?></td>
+</tr>
+<?php $count++; } ?>
+
+
+<?php
+// jenis obat
+$sel_query="SELECT COUNT(id_obat) FROM `obat` WHERE id_apotik_obat=".$_SESSION['id_role_detail_apotik'];
+$result = mysqli_query($con,$sel_query);
+while($row = mysqli_fetch_assoc($result)) { ?>
+<tr><td align="center"><?php echo $count; ?></td>
+	<td align="center">Jenis Obat</td>
+	<td align="center"><?php echo $row["COUNT(id_obat)"]; ?></td>
 </tr>
 <?php $count++; } ?>
 </tbody>
