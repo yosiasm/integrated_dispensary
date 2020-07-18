@@ -85,6 +85,21 @@ Website: https://www.allphptricks.com/
 
 				header("Location: dokter/index.php"); // Redirect user to index.php
 				
+			}elseif ($_SESSION['jenis_role_apotik'] == 'Kurir') {
+				$q = "SELECT * FROM `kurirOnApotik` WHERE id_kurir = '$id_person_credential'";
+				echo $q;
+				$res = mysqli_query($con,$q) or die(mysqli_error());
+		  		$r = mysqli_num_rows($res);
+		  		if($r==1){
+		  			while($r = mysqli_fetch_assoc($res)) {
+		  				$_SESSION['id_role_detail_apotik'] = $r['id_kurir'];
+		  				$_SESSION['id_apotik_for_map'] = $r['id_apotik'];
+
+					}
+		  		}
+
+				header("Location: kurir/index.php"); // Redirect user to index.php
+				
 			}
 
 
