@@ -47,9 +47,14 @@ if(isset($_POST['simpan_pemeriksaan']) && $_POST['simpan_pemeriksaan']=="update"
 	}
 
 	//insert pemeriksaan
-	$ins_query="INSERT INTO `pemeriksaan` (`id_pemeriksaan`, `detail_pemeriksaan`, `tanggal_pemeriksaan`, `id_pasien`, `id_dokter`, `tambahan`, `status_pemeriksaan`,`temp_id`) VALUES (NULL, '".$_POST['detail_pemeriksaan']."', now(), '".$_POST['id_person']."', '".$_SESSION['id_role_detail_apotik']."', '', 'Sudah Diperiksa','".$temp_id."');";
+	$ins_query="INSERT INTO `pemeriksaan` (`id_pemeriksaan`, `detail_pemeriksaan`, `tanggal_pemeriksaan`, `id_pasien`, `id_dokter`, `tambahan`, `status_pemeriksaan`,`temp_id`) VALUES (NULL, '".$_POST['detail_pemeriksaan']."', now(), '".$id_person."', '".$_SESSION['id_role_detail_apotik']."', '', 'Sudah Diperiksa','".$temp_id."');";
 	mysqli_query($con,$ins_query) or die(mysql_error());
-	
+
+	//insert resep baru
+	$ins_query="INSERT INTO `resep` (`id_resep`, `tanggal_resep`, `keterangan`, `id_pasien`, `id_dokter`, `id_klinik_terkait`, `id_status_resep`, `id_apotik_resep`,`temp_id`) VALUES (NULL, now(), NULL, '".$id_person."', '".$_SESSION['id_role_detail_apotik']."', '".$_SESSION['id_klinik_for_resep']."', '1', NULL,'".$temp_id."');";
+	echo "$ins_query";
+	mysqli_query($con,$ins_query) or die(mysql_error());
+
 
 	$status = "Record Inserted Successfully. </br></br><a href='buat_resep.php?temp_id=".$temp_id."'>Buat Resep</a>";
 	header("Location: buat_resep.php?temp_id=".$temp_id); // Redirect buat resep

@@ -51,7 +51,6 @@ include("auth.php");
 	if (isset($_POST['tambah_obat']) && $_POST['tambah_obat']==1) {
 		//insert detail resep
 		$ins_query="INSERT INTO `detail_resep` (`id_detail_resep`, `id_resep_`, `id_obat_`, `jumlah`, `keterangan`) VALUES (NULL, '".$_POST['id_resep']."', '".$_POST['id_obat']."', '".$_POST['jumlah']."', '".$_POST['keterangan']."');";
-		echo $ins_query;
 		mysqli_query($con,$ins_query) or die(mysql_error());
 	}
 	if (isset($_REQUEST['temp_id'])) {
