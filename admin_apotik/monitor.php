@@ -4,9 +4,10 @@
 require('../db.php');
 include("auth.php");
 ?>
+<head><link rel="stylesheet" href="../css/table.css" /></head>
 <h3>Monitor</h3>
-<table width="100%" border="1" style="border-collapse:collapse;">
-<thead>
+<table class="rwd-table" width="100%"  style="border-collapse:collapse;">
+<thead class="tbl-header">
 <tr>
 	<th><strong>No</strong></th>
 	<th><strong>Field</strong></th>

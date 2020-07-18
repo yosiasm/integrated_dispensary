@@ -5,8 +5,8 @@ require('../db.php');
 include("auth.php");
 ?>
 <h3>Monitor</h3>
-<table width="100%" border="1" style="border-collapse:collapse;">
-<thead>
+<table  width="100%"  style="border-collapse:collapse;">
+<thead class="tbl-header">
 <tr>
 	<th><strong>No</strong></th>
 	<th><strong>Field</strong></th>

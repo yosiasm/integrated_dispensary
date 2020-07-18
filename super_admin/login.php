@@ -7,6 +7,7 @@
 <meta charset="utf-8">
 <title>Login</title>
 <link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="../css/table.css" />
 </head>
 <body>
 <?php
@@ -34,11 +35,12 @@
 ?>
 <div class="form">
 <h1>Log In</h1>
+<center>
 <form action="" method="post" name="login">
 <input type="text" name="username" placeholder="Username" required />
 <input type="password" name="password" placeholder="Password" required />
 <input name="submit" type="submit" value="Login" />
-</form>
+</form></center>
 <p>Not registered yet? <a href='registration.php'>Register Here</a></p>
 
 <br /><br />

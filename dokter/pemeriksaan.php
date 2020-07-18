@@ -66,6 +66,7 @@ if(isset($_POST['simpan_pemeriksaan']) && $_POST['simpan_pemeriksaan']=="update"
 <meta charset="utf-8">
 <title>View Resep Records</title>
 <link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="../css/table.css" />
 </head>
 <body>
 <div class="form">
@@ -92,8 +93,8 @@ if(isset($_POST['cari_pasien']) && $_POST['cari_pasien']==1)
 	$sel_query="SELECT * FROM `pemeriksaan` INNER JOIN person ON pemeriksaan.id_pasien=person.id_person WHERE person.nama LIKE '%".$search."%' AND pemeriksaan.id_dokter=".$_SESSION['id_role_detail_apotik']." GROUP BY pemeriksaan.id_pasien";
 	$result = mysqli_query($con,$sel_query);
 	if (mysqli_num_rows($result)>0) { 
-		echo '<table width="100%" border="1" style="border-collapse:collapse;">
-			<thead>
+		echo '<table width="100%"  style="border-collapse:collapse;">
+			<thead class="tbl-header">
 			<tr><th><strong>No</strong></th>
 				<th><strong>Nama</strong></th>
 				<th><strong>Tanggal Lahir</strong></th>

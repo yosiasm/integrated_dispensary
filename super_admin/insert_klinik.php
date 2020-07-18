@@ -27,6 +27,7 @@ $status = "New Record Inserted Successfully.</br></br><a href='view_klinik.php'>
 <meta charset="utf-8">
 <title>Insert New Klinik</title>
 <link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="../css/table.css" />
 </head>
 <body>
 <div class="form">

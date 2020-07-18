@@ -28,6 +28,7 @@ $status = "New Record Inserted Successfully.</br></br><a href='view_obat.php'>Vi
 <meta charset="utf-8">
 <title>Insert New Obat</title>
 <link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="../css/table.css" />
 </head>
 <body>
 <div class="form">

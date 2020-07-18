@@ -9,6 +9,7 @@ include("auth.php"); //include auth.php file on all secure pages ?>
 <meta charset="utf-8">
 <title>Dashboard - Secured Page</title>
 <link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="../css/table.css" />
 </head>
 <body>
 <div class="form">

@@ -29,6 +29,7 @@ $status = "New Record Inserted Successfully.</br></br><a href='view_apotik.php'>
 <meta charset="utf-8">
 <title>Insert New Apotik</title>
 <link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="../css/table.css" />
 </head>
 <body>
 <div class="form">

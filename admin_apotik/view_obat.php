@@ -9,14 +9,15 @@ include("auth.php");
 <meta charset="utf-8">
 <title>View Obat Records</title>
 <link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="../css/table.css" />
 </head>
 <body>
 <div class="form">
 <p><a href="index.php">Home</a> | <a href="insert_obat.php">Insert New Record</a> | <a href="logout.php">Logout</a></p>
 <h2>View Obat Records</h2>
-<table width="100%" border="1" style="border-collapse:collapse;">
+<table width="100%"  style="border-collapse:collapse;">
 <!-- `nama` `alergi_obat` `tanggal_lahir` `berat_badan` `alamat` `longitude` `latitude``kontak_person` -->
-<thead>
+<thead class="tbl-header">
 <tr><th><strong>No</strong></th>
 	<th><strong>Nama Obat</strong></th>
 	<th><strong>Stok Obat</strong></th>

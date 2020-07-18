@@ -10,6 +10,7 @@
        #map{ height: 500px }
 
    </style>
+   <link rel="stylesheet" href="../css/table.css" />
 </head>
 <?php
 require('../db.php');

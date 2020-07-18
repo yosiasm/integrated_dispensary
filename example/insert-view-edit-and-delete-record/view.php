@@ -10,13 +10,14 @@ include("auth.php");
 <meta charset="utf-8">
 <title>View Records</title>
 <link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="../css/table.css" />
 </head>
 <body>
 <div class="form">
 <p><a href="index.php">Home</a> | <a href="insert.php">Insert New Record</a> | <a href="logout.php">Logout</a></p>
 <h2>View Records</h2>
-<table width="100%" border="1" style="border-collapse:collapse;">
-<thead>
+<table width="100%"  style="border-collapse:collapse;">
+<thead class="tbl-header">
 <tr><th><strong>S.No</strong></th><th><strong>Name</strong></th><th><strong>Age</strong></th><th><strong>Edit</strong></th><th><strong>Delete</strong></th></tr>
 </thead>
 <tbody>

@@ -96,7 +96,7 @@ include("auth.php");
 <center><strong>Daftar Obat</strong></center>
 <center><div style="display: inline-block;position: relative;">
 	<table>
-	<thead>
+	<thead class="tbl-header">
 		<tr><th><strong>No.</strong></th>
 			<th><strong>Nama Obat</strong></th>
 			<th><strong>Jumlah</strong></th>

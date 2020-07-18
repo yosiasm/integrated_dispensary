@@ -14,6 +14,7 @@ $row = mysqli_fetch_assoc($result);
 <meta charset="utf-8">
 <title>Update Kurir Record</title>
 <link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="../css/table.css" />
 </head>
 <body>
 <div class="form">

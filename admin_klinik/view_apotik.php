@@ -10,13 +10,14 @@ include("auth.php");
 <meta charset="utf-8">
 <title>View Apotik Records</title>
 <link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="../css/table.css" />
 </head>
 <body>
 <div class="form">
 <p><a href="index.php">Home</a> | <a href="insert_apotik.php">Insert New Record</a> | <a href="logout.php">Logout</a></p>
 <h2>View Apotik Records</h2>
-<table width="100%" border="1" style="border-collapse:collapse;">
-<thead>
+<table width="100%"  style="border-collapse:collapse;">
+<thead class="tbl-header">
 <tr><th><strong>S.No</strong></th>
 	<th><strong>Nama Apotik</strong></th>
 	<th><strong>Alamat</strong></th>
