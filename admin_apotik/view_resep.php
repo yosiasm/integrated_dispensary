@@ -16,7 +16,7 @@ include("auth.php");
 </head>
 <body>
 <div class="form">
-<p><a href="index.php">Home</a> | <a href="../dashboard.php">Dashboard</a> | <a href="logout.php">Logout</a></p>
+<p><a href="index.php">Home</a> | <a href="dashboard.php">Dashboard</a> | <a href="logout.php">Logout</a></p>
 <h2>View Resep Records</h2>
 <table width="100%" border="1" style="border-collapse:collapse;">
 <!-- `nama` `alergi_obat` `tanggal_lahir` `berat_badan` `alamat` `longitude` `latitude``kontak_person` -->
