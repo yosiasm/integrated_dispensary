@@ -2,9 +2,8 @@
 
 require('../db.php');
 include("auth.php");
-$id=$_REQUEST['id_dokter'];
-// $query = "SELECT * FROM dokterOnklinik INNER JOIN person on dokterOnklinik.id_dokter=person.id_person WHERE id_dokter=".$id." AND id_klinik=".$_SESSION['id_role_detail_apotik'] ;
-$query = "SELECT * FROM dokterOnklinik INNER JOIN credential on dokterOnklinik.id_dokter=credential.id_credential INNER JOIN person on credential.id_person_credential=person.id_person WHERE id_dokter=".$id." AND id_klinik=".$_SESSION['id_role_detail_apotik']." ;";
+$id=$_REQUEST['id_kurir'];
+$query = "SELECT * FROM kurirOnApotik INNER JOIN credential on kurirOnApotik.id_kurir=credential.id_credential INNER JOIN person on credential.id_person_credential=person.id_person WHERE id_kurir=".$id." AND id_apotik=".$_SESSION['id_role_detail_apotik']." ;";
 
 $result = mysqli_query($con, $query) or die ( mysqli_error());
 $row = mysqli_fetch_assoc($result);
@@ -13,13 +12,13 @@ $row = mysqli_fetch_assoc($result);
 <html>
 <head>
 <meta charset="utf-8">
-<title>Update Dokter Record</title>
+<title>Update Kurir Record</title>
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 <div class="form">
-<p><a href="dashboard.php">Dashboard</a> | <a href="insert_klinik.php">Insert New Dokter</a> | <a href="logout.php">Logout</a></p>
-<h1>Update Dokter Record</h1>
+<p><a href="dashboard.php">Dashboard</a> | <a href="insert_kurir.php">Insert New Kurir</a> | <a href="logout.php">Logout</a></p>
+<h1>Update Kurir Record</h1>
 <?php
 $status = "";
 if(isset($_POST['new']) && $_POST['new']==1)
@@ -37,9 +36,8 @@ $latitude =  $_REQUEST['latitude'];
 $temp_id = $row['temp_id'];
 // $submittedby = $_SESSION["username"];
 $update="UPDATE `person` SET `nama` = '$nama', `alergi_obat` = '$alergi_obat', `tanggal_lahir` = '$tanggal_lahir', `berat_badan` = '$berat_badan', `alamat` = '$alamat', `longitude` = '$longitude', `latitude` = '$latitude', `kontak_person` = '$kontak_person' WHERE `person`.`temp_id` = '$temp_id';";
-echo $update;
 mysqli_query($con, $update) or die(mysqli_error());
-$status = "Record Updated Successfully. </br></br><a href='view_dokter.php'>View Updated Record</a>";
+$status = "Record Updated Successfully. </br></br><a href='view_kurir.php'>View Updated Record</a>";
 echo '<p style="color:#FF0000;">'.$status.'</p>';
 }else {
 ?>

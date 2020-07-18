@@ -11,13 +11,13 @@ include("auth.php");
 <html>
 <head>
 <meta charset="utf-8">
-<title>View Dokter Records</title>
+<title>View Kurir Records</title>
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 <div class="form">
-<p><a href="index.php">Home</a> | <a href="insert_dokter.php">Insert New Record</a> | <a href="logout.php">Logout</a></p>
-<h2>View Dokter Records</h2>
+<p><a href="index.php">Home</a> | <a href="insert_kurir.php">Insert New Record</a> | <a href="logout.php">Logout</a></p>
+<h2>View Kurir Records</h2>
 <table width="100%" border="1" style="border-collapse:collapse;">
 <!-- `nama` `alergi_obat` `tanggal_lahir` `berat_badan` `alamat` `longitude` `latitude``kontak_person` -->
 <thead>
@@ -40,7 +40,7 @@ $count=1;
 // $sel_query="Select * from new_record ORDER BY id desc;";
 // $sel_query="SELECT * FROM dokterOnklinik INNER JOIN person on dokterOnklinik.id_dokter=person.id_person WHERE id_klinik=".$_SESSION['id_role_detail_apotik']." ;";
 
-$sel_query="SELECT * FROM dokterOnklinik INNER JOIN credential on dokterOnklinik.id_dokter=credential.id_credential INNER JOIN person on credential.id_person_credential=person.id_person WHERE id_klinik=".$_SESSION['id_role_detail_apotik']." ;";
+$sel_query="SELECT * FROM kurirOnApotik INNER JOIN credential on kurirOnApotik.id_kurir=credential.id_credential INNER JOIN person on credential.id_person_credential=person.id_person WHERE id_apotik=".$_SESSION['id_role_detail_apotik']." ;";
 $result = mysqli_query($con,$sel_query);
 while($row = mysqli_fetch_assoc($result)) { ?>
 
@@ -53,8 +53,8 @@ while($row = mysqli_fetch_assoc($result)) { ?>
 	<td align="center"><?php echo $row["kontak_person"]; ?></td>
 	<td align="center"><?php echo $row["longitude"]; ?></td>
 	<td align="center"><?php echo $row["latitude"]; ?></td>
-	<td align="center"><a href="edit_dokter.php?id_dokter=<?php echo $row["id_dokter"]; ?>">Edit</a></td>
-	<td align="center"><a href="delete_dokter.php?id_dokter=<?php echo $row["id_dokter"]; ?>">Delete</a></td>
+	<td align="center"><a href="edit_kurir.php?id_kurir=<?php echo $row["id_kurir"]; ?>">Edit</a></td>
+	<td align="center"><a href="delete_kurir.php?id_kurir=<?php echo $row["id_kurir"]; ?>">Delete</a></td>
 </tr>
 <?php $count++; } ?>
 </tbody>

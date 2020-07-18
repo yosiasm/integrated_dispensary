@@ -17,14 +17,18 @@ include("auth.php"); //include auth.php file on all secure pages ?>
 <div class="form">
 <p>Welcome to Dashboard.</p>
 <?php include("map.php"); ?>
-<?php include("monitor.php"); ?>
+<?php include("monitor.php");?>
 <h3>Action</h3>
 <p><a href="index.php">Home</a><p>
 <!-- <p><a href="insert.php">Insert New Record</a></p> -->
 <!-- <p><a href="view.php">View Records</a><p> -->
 
-<p><a href="insert_dokter.php">Insert Dokter Records</a><p>
-<p><a href="view_dokter.php">View dokter Records</a><p>
+<p><a href="view_resep.php">View Resep Records</a><p>
+<p><a href="insert_obat.php">Insert Obat Records</a><p>
+<p><a href="view_obat.php">View Obat Records</a><p>
+<p><a href="insert_kurir.php">Insert Kurir Records</a><p>
+<p><a href="view_kurir.php">View Kurir Records</a><p>
+
 <p><a href="logout.php">Logout</a></p>
 
 
