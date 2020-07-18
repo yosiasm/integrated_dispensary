@@ -1,8 +1,5 @@
 <?php
-/*
-Author: Javed Ur Rehman
-Website: https://www.allphptricks.com/
-*/
+ 
  
 require('../db.php');
 include("auth.php");
@@ -17,6 +14,17 @@ include("auth.php");
 </tr>
 </thead>
 <tbody>
+<?php
+$count=1;
+// kurir
+$sel_query="SELECT COUNT(id_kurirOnApotik) FROM `kurirOnApotik` WHERE id_apotik=".$_SESSION['id_role_detail_apotik'];
+$result = mysqli_query($con,$sel_query);
+while($row = mysqli_fetch_assoc($result)) { ?>
+<tr><td align="center"><?php echo $count; ?></td>
+	<td align="center">Kurir</td>
+	<td align="center"><?php echo $row["COUNT(id_kurirOnApotik)"]; ?></td>
+</tr>
+<?php $count++; } ?>
 
 
 </tbody>

@@ -1,8 +1,5 @@
 <?php
-/*
-Author: Javed Ur Rehman
-Website: https://www.allphptricks.com/
-*/
+ 
 
 require('../db.php');
 $id_apotik=$_REQUEST['id_apotik'];

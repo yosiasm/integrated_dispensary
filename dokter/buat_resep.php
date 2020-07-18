@@ -52,6 +52,9 @@ include("auth.php");
 		//insert detail resep
 		$ins_query="INSERT INTO `detail_resep` (`id_detail_resep`, `id_resep_`, `id_obat_`, `jumlah`, `keterangan`) VALUES (NULL, '".$_POST['id_resep']."', '".$_POST['id_obat']."', '".$_POST['jumlah']."', '".$_POST['keterangan']."');";
 		mysqli_query($con,$ins_query) or die(mysql_error());
+
+		
+		
 	}
 	if (isset($_REQUEST['temp_id'])) {
 		$temp_id = $_REQUEST['temp_id'];
@@ -67,6 +70,8 @@ include("auth.php");
 	}elseif (isset($_REQUEST['id_resep'])) {
 		$id_resep = $_REQUEST['id_resep'];
 	}
+	$ins_query="UPDATE `resep` SET `id_apotik_resep` = '".$_POST['id_apotik']."' WHERE `resep`.`id_resep` = '".$id_resep."'";
+		mysqli_query($con,$ins_query) or die(mysql_error());
 ?>
 <br/>
 <center><strong>Tambah Obat</strong></center>
@@ -77,6 +82,8 @@ include("auth.php");
 	
 		<input type="hidden" name="id_resep" value="<?php echo $id_resep ?>">
 		<input type="hidden" name="tambah_obat" value="1">
+				<input type="text" name="apotik" id="apotik" class="form-control" placeholder="Tulis Nama Apotik" /> 
+				<input type="hidden" name="id_apotik" id="id_apotik" class="form-control" /> 
 				<input type="text" name="obat" id="obat" class="form-control" placeholder="Tulis Nama obat" /> 
 				<input type="hidden" name="id_obat" id="id_obat" class="form-control" /> 
 				<p><input type="number" name="jumlah" placeholder="Jumlah Obat"></p>
@@ -131,6 +138,18 @@ include("auth.php");
           onSelect: function (suggestion) {
               $( "#obat" ).val(suggestion.nama);
               $( "#id_obat" ).val(suggestion.id_obat);
+          }
+        });
+      })
+  </script>
+  <script type="text/javascript">
+      $(document).ready(function() {
+        $( "#apotik" ).autocomplete({
+          serviceUrl: "search_apotik.php",   // Kode php untuk prosesing data
+          dataType: "JSON",           // Tipe data JSON
+          onSelect: function (suggestion) {
+              $( "#apotik" ).val(suggestion.nama);
+              $( "#id_apotik" ).val(suggestion.id_apotik);
           }
         });
       })
