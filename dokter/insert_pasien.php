@@ -10,8 +10,7 @@ include("auth.php");
 $status = "";
 if(isset($_POST['new']) && $_POST['new']==1)
 {
-//id role kurir
-$role_code = '5';
+$role_code = '3';
 $trn_date = date("Y-m-d H:i:s");
 
 $nama = $_REQUEST['nama'];
@@ -49,26 +48,26 @@ while($row = mysqli_fetch_assoc($result)) {
 	$id_credential = $row['id_credential'];
 }
 
-//insert into kurirOnApotik
-$ins_query="INSERT INTO `kurirOnApotik` (`id_kurirOnApotik`,`id_kurir`, `id_apotik`) VALUES (null,'$id_credential', '".$_SESSION['id_role_detail_apotik']."');";
+//insert into dokterOnklinik
+$ins_query="INSERT INTO `dokterOnklinik` (`id_dokterOnklinik`,`id_dokter`, `id_klinik`) VALUES (null,'$id_credential', '".$_SESSION['id_role_detail_apotik']."');";
 mysqli_query($con,$ins_query) or die(mysql_error());
 
-$status = "New Record Inserted Successfully.</br></br><a href='view_kurir.php'>View Inserted Record</a>";
+$status = "New Record Inserted Successfully.</br></br><a href='view_dokter.php'>View Inserted Record</a>";
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>Insert New Kurir</title>
+<title>Insert New Dokter</title>
 <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 <div class="form">
-<p><a href="dashboard.php">Dashboard</a> | <a href="view_kurir.php">View Records</a> | <a href="logout.php">Logout</a></p>
+<p><a href="dashboard.php">Dashboard</a> | <a href="view_dokter.php">View Records</a> | <a href="logout.php">Logout</a></p>
 
 <div>
-<h1>Insert New Kurir</h1>
+<h1>Insert New Dokter</h1>
 <form name="form" method="post" action=""> 
 <input type="hidden" name="new" value="1" />
 

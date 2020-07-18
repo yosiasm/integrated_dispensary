@@ -70,6 +70,20 @@ Website: https://www.allphptricks.com/
 
 				header("Location: admin_apotik/index.php"); // Redirect user to index.php
 				
+			}elseif ($_SESSION['jenis_role_apotik'] == 'Dokter') {
+				$q = "SELECT * FROM `dokterOnklinik` WHERE id_dokter = '$id_person_credential'";
+				echo $q;
+				$res = mysqli_query($con,$q) or die(mysqli_error());
+		  		$r = mysqli_num_rows($res);
+		  		if($r==1){
+		  			while($r = mysqli_fetch_assoc($res)) {
+		  				$_SESSION['id_role_detail_apotik'] = $r['id_dokter'];
+
+					}
+		  		}
+
+				header("Location: dokter/index.php"); // Redirect user to index.php
+				
 			}
 
 
