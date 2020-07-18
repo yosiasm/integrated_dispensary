@@ -10,21 +10,28 @@ include("auth.php");
 
 $status = "";
 
-if(isset($_POST['id_pemeriksaan']) && $_POST['id_pemeriksaan']=="update")
+if(isset($_POST['simpan_pemeriksaan']) && $_POST['simpan_pemeriksaan']=="update")
 {
-	//update detail pasien
+	$temp_id = uniqid();
 
-	$update="UPDATE `person` SET `nama` = '".$_POST['nama']."', `alergi_obat` = '".$_POST['alergi_obat']."', `tanggal_lahir` = '".$_POST['tanggal_lahir']."', `berat_badan` = '".$_POST['berat_badan']."', `alamat` = '".$_POST['alamat']."', `longitude` = '".$_POST['longitude']."', `latitude` = '".$_POST['latitude']."', `kontak_person` = '".$_POST['kontak_person']."' WHERE `person`.`id_person` = ".$_POST['id_person'];
+	//update detail pasien
+	$update="UPDATE `person` SET `nama` = '".$_POST['nama']."', `alergi_obat` = '".$_POST['alergi_obat']."', `tanggal_lahir` = '".$_POST['tanggal_lahir']."', `berat_badan` = '".$_POST['berat_badan']."', `alamat` = '".$_POST['alamat']."', `longitude` = '".$_POST['longitude']."', `latitude` = '".$_POST['latitude']."', `kontak_person` = '".$_POST['kontak_person']."' , `temp_id`='".$temp_id."' WHERE `person`.`id_person` = ".$_POST['id_person'];
 	mysqli_query($con, $update) or die(mysqli_error());
 
 
 	//insert pemeriksaan
-	$ins_query="INSERT INTO `pemeriksaan` (`id_pemeriksaan`, `detail_pemeriksaan`, `tanggal_pemeriksaan`, `id_pasien`, `id_dokter`, `tambahan`, `status_pemeriksaan`) VALUES (NULL, '".$_POST['detail_pemeriksaan']."', now(), '".$_POST['id_person']."', '".$_SESSION['id_role_detail_apotik']."', '', 'Sudah Diperiksa');";
+	$ins_query="INSERT INTO `pemeriksaan` (`id_pemeriksaan`, `detail_pemeriksaan`, `tanggal_pemeriksaan`, `id_pasien`, `id_dokter`, `tambahan`, `status_pemeriksaan`,`temp_id`) VALUES (NULL, '".$_POST['detail_pemeriksaan']."', now(), '".$_POST['id_person']."', '".$_SESSION['id_role_detail_apotik']."', '', 'Sudah Diperiksa','".$temp_id."');";
+	mysqli_query($con,$ins_query) or die(mysql_error());
+
+	//insert resep baru
+	$ins_query="INSERT INTO `resep` (`id_resep`, `tanggal_resep`, `keterangan`, `id_pasien`, `id_dokter`, `id_klinik_terkait`, `id_status_resep`, `id_apotik_resep`,`temp_id`) VALUES (NULL, now(), NULL, '".$_POST['id_person']."', '".$_SESSION['id_role_detail_apotik']."', '".$_SESSION['id_klinik_for_resep']."', '1', NULL,'".$temp_id."');";
 	mysqli_query($con,$ins_query) or die(mysql_error());
 	
 
-	$status = "Record Inserted Successfully. </br></br><a href='buat_resep.php'>Buat Resep</a>";
-}elseif(isset($_POST['id_pemeriksaan']) && $_POST['id_pemeriksaan']=="insert")
+	$status = "Record Inserted Successfully. </br></br><a href='buat_resep.php?temp_id=".$temp_id."'>Buat Resep</a>";
+	header("Location: buat_resep.php?temp_id=".$temp_id); // Redirect buat resep
+
+}elseif(isset($_POST['simpan_pemeriksaan']) && $_POST['simpan_pemeriksaan']=="insert")
 {
 	$temp_id = uniqid();
 
@@ -40,11 +47,13 @@ if(isset($_POST['id_pemeriksaan']) && $_POST['id_pemeriksaan']=="update")
 	}
 
 	//insert pemeriksaan
-	$ins_query="INSERT INTO `pemeriksaan` (`id_pemeriksaan`, `detail_pemeriksaan`, `tanggal_pemeriksaan`, `id_pasien`, `id_dokter`, `tambahan`, `status_pemeriksaan`) VALUES (NULL, '".$_POST['detail_pemeriksaan']."', now(), '".$_POST['id_person']."', '".$_SESSION['id_role_detail_apotik']."', '', 'Sudah Diperiksa');";
+	$ins_query="INSERT INTO `pemeriksaan` (`id_pemeriksaan`, `detail_pemeriksaan`, `tanggal_pemeriksaan`, `id_pasien`, `id_dokter`, `tambahan`, `status_pemeriksaan`,`temp_id`) VALUES (NULL, '".$_POST['detail_pemeriksaan']."', now(), '".$_POST['id_person']."', '".$_SESSION['id_role_detail_apotik']."', '', 'Sudah Diperiksa','".$temp_id."');";
 	mysqli_query($con,$ins_query) or die(mysql_error());
 	
 
-	$status = "Record Inserted Successfully. </br></br><a href='buat_resep.php'>Buat Resep</a>";
+	$status = "Record Inserted Successfully. </br></br><a href='buat_resep.php?temp_id=".$temp_id."'>Buat Resep</a>";
+	header("Location: buat_resep.php?temp_id=".$temp_id); // Redirect buat resep
+
 }
 
 
@@ -75,29 +84,35 @@ if(isset($_POST['id_pemeriksaan']) && $_POST['id_pemeriksaan']=="update")
 if(isset($_POST['cari_pasien']) && $_POST['cari_pasien']==1)
 {
 	$search = $_POST['search'];
-	$sel_query="SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
-SELECT * FROM `pemeriksaan` INNER JOIN person ON pemeriksaan.id_pasien=person.id_person WHERE person.nama LIKE '%".$search."%' AND pemeriksaan.id_dokter=".$_SESSION['id_role_detail_apotik']." GROUP BY pemeriksaan.id_pasien";
+	$setting_enabel_groupby_query="SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));";
+	mysqli_query($con,$setting_enabel_groupby_query);
 
+	$sel_query="SELECT * FROM `pemeriksaan` INNER JOIN person ON pemeriksaan.id_pasien=person.id_person WHERE person.nama LIKE '%".$search."%' AND pemeriksaan.id_dokter=".$_SESSION['id_role_detail_apotik']." GROUP BY pemeriksaan.id_pasien";
 	$result = mysqli_query($con,$sel_query);
-	echo '<table width="100%" border="1" style="border-collapse:collapse;">
-	<thead>
-<tr><th><strong>No</strong></th>
-	<th><strong>Nama</strong></th>
-	<th><strong>Tanggal Lahir</strong></th>
-	<th><strong>Tanggal Pemeriksaan</strong></th>
-	<th><strong>Action</strong></th>
-</tr>
-</thead>
-<tbody>
-	';
-	$c=1;
-	while($row = mysqli_fetch_assoc($result)) { 
-		echo "<tr><td>".$c."</td>
-		<td>".$row['nama']."</td><td>".$row['tanggal_lahir']."</td><td>".$row['tanggal_pemeriksaan']."</td><td><a href='pemeriksaan.php?id_pasien=".$row['id_pasien']."'>periksa</a></td>
-		</tr>";
-		$c++;
+	if (mysqli_num_rows($result)>0) { 
+		echo '<table width="100%" border="1" style="border-collapse:collapse;">
+			<thead>
+			<tr><th><strong>No</strong></th>
+				<th><strong>Nama</strong></th>
+				<th><strong>Tanggal Lahir</strong></th>
+				<th><strong>Tanggal Pemeriksaan</strong></th>
+				<th><strong>Action</strong></th>
+			</tr>
+			</thead>
+			<tbody>
+			';
+		$c=1;
+		while($row = mysqli_fetch_assoc($result)) { 
+			echo "<tr><td>".$c."</td>
+			<td>".$row['nama']."</td><td>".$row['tanggal_lahir']."</td><td>".$row['tanggal_pemeriksaan']."</td><td><a href='pemeriksaan.php?id_pasien=".$row['id_pasien']."'>periksa</a></td>
+			</tr>";
+			$c++;
+		}
+		echo "</tbody></table>";
+	}else {
+		echo "Not Found";
 	}
-	echo "</tbody></table>";
+	
 
 }
 ?>
@@ -110,7 +125,8 @@ SELECT * FROM `pemeriksaan` INNER JOIN person ON pemeriksaan.id_pasien=person.id
 <h2>Pasien Records</h2>
 
 <?php
-$id_pasien=get($_REQUEST['id_pasien'],'no_data');
+
+$id_pasien=isset($_REQUEST['id_pasien']) ? $_REQUEST['id_pasien'] : 'no_data';
 // ######################################### menggunakan data di database
 if($id_pasien != 'no_data'){
 	// $sel_query="SELECT * FROM `person` INNER JOIN pemeriksaan on pemeriksaan.id_pasien=person.id_person WHERE id_person=".$_REQUEST['id_pasien']." ORDER BY pemeriksaan.tanggal_pemeriksaan DESC LIMIT 1";
@@ -120,7 +136,7 @@ if($id_pasien != 'no_data'){
 	while($row = mysqli_fetch_assoc($result)) { ?>
 
 <div>
-<form name="form" method="post" action=""> 
+<form name="form" method="post" action="pemeriksaan.php"> 
 <input type="hidden" name="insert_periksa" value="1" />
 <input name="id_person" type="hidden" value="<?php echo $row['id_person'];?>" />
 <input type="hidden" name="simpan_pemeriksaan" value="update" />
@@ -135,13 +151,14 @@ if($id_pasien != 'no_data'){
 <p><input type="number" step="any" name="longitude" required value="<?php echo $row['longitude'];?>"/></p>
 <p><input type="number" step="any" name="latitude" required value="<?php echo $row['latitude'];?>"/></p>
 <p><textarea name="detail_pemeriksaan" rows="4" cols="50">Detail Pemeriksaan</textarea></p>
-<p><input name="submit" type="submit" value="Submit" /></p>
+<p><input name="submit" type="submit" value="Simpan Dan Buat Resep" /></p>
 </form>
 
 
-<?php }else{ ?>
+<?php }} ?> 
+<?php if($id_pasien == 'no_data') { ?>
 	<!-- ########################################### jika pemeriksaan baru -->
-<form name="form" method="post" action=""> 
+<form name="form" method="post" action="pemeriksaan.php"> 
 <input type="hidden" name="insert_periksa" value="1" />
 <input type="hidden" name="new" value="1" />
 <input type="hidden" name="simpan_pemeriksaan" value="insert" />
@@ -150,13 +167,13 @@ if($id_pasien != 'no_data'){
 <p><input type="text" name="nama" placeholder="Masukan nama" required /></p>
 <p><input type="text" name="alergi_obat" placeholder="Masukan Keterangan Alergi Obat" required /></p>
 <p><input type="date" name="tanggal_lahir" required /></p>
-<p><input type="number" name="berat_badan" required /></p>
+<p><input type="number" name="berat_badan" required placeholder="Masukan Berat Badan" /></p>
 <p><input type="text" name="alamat" placeholder="Masukan Alamat" required /></p>
 <p><input type="text" name="kontak_person" placeholder="Masukan Nomor Telp" required /></p>
-<p><input type="number" step="any" name="longitude" required /></p>
-<p><input type="number" step="any" name="latitude" required /></p>
+<p><input type="number" step="any" name="longitude" required placeholder="Masukan longitude" /></p>
+<p><input type="number" step="any" name="latitude" required placeholder="Masukan latitude" /></p>
 <p><textarea name="detail_pemeriksaan" rows="4" cols="50">Detail Pemeriksaan</textarea></p>
-<p><input name="submit" type="submit" value="Submit" /></p>
+<p><input name="submit" type="submit" value="Simpan Dan Buat Resep" /></p>
 </form>
 <?php } ?>
 
@@ -167,90 +184,6 @@ if($id_pasien != 'no_data'){
 
 
 
-
-
-
-
-<table width="100%" border="1" style="border-collapse:collapse;">
-<!-- `nama` `alergi_obat` `tanggal_lahir` `berat_badan` `alamat` `longitude` `latitude``kontak_person` -->
-<thead>
-<tr><th><strong>No</strong></th>
-	<th><strong>Nama</strong></th>
-	<th><strong>Alergi Obat</strong></th>
-	<th><strong>Tanggal Lahir</strong></th>
-	<th><strong>Berat Badan</strong></th>
-	<th><strong>Alamat</strong></th>
-	<th><strong>Kontak</strong></th>
-	<th><strong>Longitude</strong></th>
-	<th><strong>Latitude</strong></th>
-	<th><strong>Edit</strong></th>
-	<th><strong>Delete</strong></th>
-</tr>
-</thead>
-<tbody>
-<?php
-$id_pasien=get($_REQUEST['id_pasien'],'no_data');
-if($id_pasien != 'no_data'){
-	$sel_query="SELECT * FROM person WHERE id_person=".$_REQUEST['id_pasien'];
-
-	$result = mysqli_query($con,$sel_query);
-	while($row = mysqli_fetch_assoc($result)) { ?>
-
-	<tr><td align="center"><?php echo $row["id_resep"]; ?></td>
-		<td align="center"><?php echo $row["tanggal_resep"]; ?></td>
-		<td align="center"><?php echo $row["status"]; ?></td>
-		<td align="center"><?php echo $row["nama_dokter"]; ?></td>
-		<td align="center"><?php echo $row["nama_klinik"]; ?></td>
-		<td align="center"><?php echo $row["kontak_klinik"]; ?></td>
-		<td align="center"><?php echo $row["alamat_klinik"]; ?></td>
-		<td align="center"><?php echo $row["keterangan"]; ?></td>
-	</tr>
-}
-
-
-<?php } ?>
-</tbody>
-</table>
-
-<h2>Detail Obat</h2>
-<table width="100%" border="1" style="border-collapse:collapse;">
-<!-- `nama` `alergi_obat` `tanggal_lahir` `berat_badan` `alamat` `longitude` `latitude``kontak_person` -->
-<thead>
-<tr><th><strong>No</strong></th>
-	<th><strong>Nama Obat</strong></th>
-	<th><strong>Stok</strong></th>
-	<th><strong>Pesanan</strong></th>
-</tr>
-</thead>
-<tbody>
-<?php
-$count=1;
-$id_resep=$_REQUEST['id_resep'];
-
-
-$sel_query="SELECT id_obat_ ,`obat`.`nama_obat`,`obat`.`stok`,`detail_resep`.`jumlah` FROM `detail_resep` INNER JOIN `resep` ON `detail_resep`.`id_resep_`=`resep`.`id_resep` INNER JOIN `obat` ON `obat`.`id_obat`=`detail_resep`.`id_obat_` WHERE `detail_resep`.`id_resep_`=".$id_resep." AND `resep`.`id_apotik_resep`=".$_SESSION['id_role_detail_apotik']." ;";
-
-$result = mysqli_query($con,$sel_query);
-while($row = mysqli_fetch_assoc($result)) { ?>
-
-<tr><td align="center"><?php echo $count; ?></td>
-	<td align="center"><?php echo $row["nama_obat"]; ?>
-	<td align="center"><?php echo $row["stok"]; ?></td>
-	<td align="center"><?php echo $row["jumlah"]; ?></td>
-</tr>
-<?php $count++; } ?>
-</tbody>
-</table>
-<div>
-<form name="form" method="post" action=""> 
-<input type="hidden" name="checkout" value="1" />
-
-<p><input name="submit" type="submit" value="Checkout" /></p>
-</form>
-<p style="color:#FF0000;"><?php echo $status; ?></p>
-
-
-</div>
 
 </div>
 </body>

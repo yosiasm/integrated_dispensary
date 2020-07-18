@@ -78,6 +78,7 @@ Website: https://www.allphptricks.com/
 		  		if($r==1){
 		  			while($r = mysqli_fetch_assoc($res)) {
 		  				$_SESSION['id_role_detail_apotik'] = $r['id_dokter'];
+		  				$_SESSION['id_klinik_for_resep'] = $r['id_klinik'];
 
 					}
 		  		}
